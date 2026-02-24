@@ -1,54 +1,74 @@
 #include <Arduino.h>
+#include <OneButton.h>
 
-void flashLed(int led, unsigned long start, unsigned int duration, unsigned int currentCycle);
+#include "FlashLedsMod.h"
 
-int redLed = 4;
-int blueLed = 17;
-int greenLed = 10;
+#define SERIAL_BAUD_RATE 115200
 
-int button = 21;
-bool buttonFlag = false;
-unsigned long debounceTime = 200;
-unsigned long lastClickTTime = 0;
+void generateTestPatterns(const int8_t* newLeds, const int8_t ledCount, FlashLedsMod* flashLedsMods, const int8_t modscount, unsigned int maxDuration);
+void flashingModSelector(bool isNext);
 
-unsigned int duration = 1000;
-unsigned int totalCycles = 3000; // Duration for which the LED will be on (in milliseconds)
+const int8_t leds[] = {4, 17, 10};
+const int8_t ledCount = sizeof(leds) / sizeof(leds[0]);   
+const int8_t flashingModsCount = 6;
+FlashLedsMod flashLedsMods[flashingModsCount]; // 0 using for turn off all leds, 1-5 for different flashing modes
+int8_t currentFlashingModIndex = 0;
+
+const int8_t bootButton = 0;
+const int8_t externalButton = 21;
+unsigned long currentCycle = 0;
+
+OneButton oneButtonBoot(bootButton, true);
+OneButton oneButtonExternal(externalButton, true);
+
+void handleBootClick() {
+  flashingModSelector(false);
+  Serial.printf("Boot button clicked, changing flashing mode down to: %d, led duration: %d\n", 
+    currentFlashingModIndex, flashLedsMods[currentFlashingModIndex].getDuration());
+  Serial.println(currentFlashingModIndex);
+}
+
+void handleExternalClick() {
+  flashingModSelector(true);
+  Serial.printf("External button clicked, changing flashing mode up to: %d, led duration: %d\n", 
+    currentFlashingModIndex, flashLedsMods[currentFlashingModIndex].getDuration());
+}
 
 void setup() {
-  pinMode(redLed, OUTPUT);
-  pinMode(blueLed, OUTPUT);
-  pinMode(greenLed, OUTPUT);
-  pinMode(button, INPUT_PULLDOWN);
+  Serial.begin(SERIAL_BAUD_RATE);
+
+  for (int i = 0; i < ledCount; i++)
+  {
+    pinMode(leds[i], OUTPUT);
+  }
+  pinMode(bootButton, INPUT_PULLUP);
+  pinMode(externalButton, INPUT_PULLUP);
+
+  oneButtonBoot.attachClick(handleBootClick);
+  oneButtonExternal.attachClick(handleExternalClick);
+
+  int minDuration = 200;
+  int maxDuration = 1000;
+  generateTestPatterns(leds, ledCount, flashLedsMods, flashingModsCount, maxDuration);
 }
 
 void loop() {
-  if (digitalRead(button) == HIGH && millis() - lastClickTTime > debounceTime)
-  {
-    lastClickTTime = millis(); // Update the last click time
-    buttonFlag = !buttonFlag; // Toggle the button flag
-  }
-  
-   if (buttonFlag)
-  {
-    unsigned int currentCycle = millis() % totalCycles; // Get the current cycle time
+  currentCycle = millis() % flashLedsMods[currentFlashingModIndex].getTotalCycles();
+  flashLedsMods[currentFlashingModIndex].flashing(currentCycle);
+  oneButtonBoot.tick();
+  oneButtonExternal.tick();
+}
 
-    flashLed(redLed, 0, duration, currentCycle);
-    flashLed(blueLed, 1000, duration, currentCycle);
-    flashLed(greenLed, 2000, duration, currentCycle);
-  }
-   else
+void generateTestPatterns(const int8_t* newLeds, const int8_t ledCount, FlashLedsMod* flashLedsMods, const int8_t modscount, unsigned int maxDuration) {
+  for (int i = 0; i < modscount; i++)
   {
-    digitalWrite(redLed, LOW);
-    digitalWrite(blueLed, LOW);
-    digitalWrite(greenLed, LOW);
+    flashLedsMods[i].setLeds(newLeds, ledCount);
+    flashLedsMods[i].setDuration(i * (maxDuration / (modscount - 1)));
   }
 }
 
-void flashLed(int led, unsigned long start, unsigned int duration, unsigned int currentCycle) {
-  unsigned long now = millis();
-  if (currentCycle >= start && currentCycle < start + duration) {
-    digitalWrite(led, HIGH);
-  } else {
-    digitalWrite(led, LOW);
-  }
+void flashingModSelector(bool isNext) {
+    isNext ? currentFlashingModIndex++ : currentFlashingModIndex--;
+    currentFlashingModIndex < 0 ? currentFlashingModIndex = flashingModsCount - 1 : currentFlashingModIndex;
+    currentFlashingModIndex %= flashingModsCount;
 }
