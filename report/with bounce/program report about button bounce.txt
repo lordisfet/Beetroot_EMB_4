@@ -1,0 +1,129 @@
+---- Opened the serial port COM5 ----
+
+LEFT Button Pressed! Count: 1
+
+LEFT Button Pressed! Count: 2
+
+LEFT Button Pressed! Count: 3
+
+LEFT Button Pressed! Count: 4
+
+LEFT Button Pressed! Count: 5
+
+LEFT Button Pressed! Count: 6
+
+LEFT Button Pressed! Count: 7
+
+LEFT Button Pressed! Count: 8
+
+LEFT Button Pressed! Count: 9
+
+LEFT Button Pressed! Count: 10
+
+LEFT Button Pressed! Count: 11
+
+LEFT Button Pressed! Count: 12
+
+LEFT Button Pressed! Count: 13
+
+LEFT Button Pressed! Count: 14
+
+LEFT Button Pressed! Count: 15
+
+LEFT Button Pressed! Count: 16
+
+LEFT Button Pressed! Count: 17
+
+LEFT Button Pressed! Count: 18
+
+LEFT Button Pressed! Count: 19
+
+LEFT Button Pressed! Count: 20
+
+LEFT Button Pressed! Count: 21
+
+LEFT Button Pressed! Count: 22
+
+LEFT Button Pressed! Count: 23
+
+LEFT Button Pressed! Count: 24
+
+LEFT Button Pressed! Count: 25
+
+LEFT BGuru Meditation Error: Core  1 panic'ed (Interrupt wdt timeout on CPU1). 
+
+Core  1 register dump:
+PC      : 0x4037d44a  PS      : 0x00060d34  A0      : 0x8037c402  A1      : 0x3fc93740  
+A2      : 0x3fcec6e4  A3      : 0x3fcec020  A4      : 0x00000004  A5      : 0x00060d23  
+A6      : 0x00060d23  A7      : 0x00000001  A8      : 0x3fcec020  A9      : 0x00000018  
+A10     : 0x3fcec020  A11     : 0x00000018  A12     : 0x3fc95f10  A13     : 0x00060d23  
+A14     : 0x02c939a0  A15     : 0x00ffffff  SAR     : 0x0000001d  EXCCAUSE: 0x00000006  
+EXCVADDR: 0x00000000  LBEG    : 0x40056f08  LEND    : 0x40056f12  LCOUNT  : 0x00000000  
+Core  1 was running in ISR context:
+EPC1    : 0x42022ae7  EPC2    : 0x00000000  EPC3    : 0x00000000  EPC4    : 0x4037d44a
+
+
+Backtrace: 0x4037d447:0x3fc93740 0x4037c3ff:0x3fc93760 0x4037b852:0x3fc93780 0x42005814:0x3fc937c0 0x42006041:0x3fc93810 0x42002941:0x3fc93840 0x4200192d:0x3fc93860 0x42022516:0x3fc93880 0x42001e5d:0x3fc938a0 0x40375351:0x3fc938c0 0x42022591:0x3fc93910 0x403753d1:0x3fc93930 0x403753f6:0x3fc93950 0x403784c9:0x3fc93970 0x420037bd:0x3fcebe90
+
+
+Core  0 register dump:
+PC      : 0x4037d5d3  PS      : 0x00060034  A0      : 0x8037c04f  A1      : 0x3fc930a0  
+A2      : 0x3fc939a0  A3      : 0xb33fffff  A4      : 0x0000abab  A5      : 0x00060023  
+A6      : 0x00060021  A7      : 0x0000cdcd  A8      : 0x0000abab  A9      : 0xffffffff  
+A10     : 0x00000000  A11     : 0x3fc95d0c  A12     : 0x00000000  A13     : 0x00000020  
+A14     : 0x02c939a0  A15     : 0x00ffffff  SAR     : 0x0000000e  EXCCAUSE: 0x00000006  
+EXCVADDR: 0x00000000  LBEG    : 0x00000000  LEND    : 0x00000000  LCOUNT  : 0x00000000  
+
+
+Backtrace: 0x4037d5d0:0x3fc930a0 0x4037c04c:0x3fc930e0 0x4037ae27:0x3fc93100 0x403786a4:0x3fc93120 0x403784c9:0x3fc93140 0x42022c07:0x3fcf4760 0x4200a38e:0x3fcf4780 0x4037bbc4:0x3fcf47a0
+
+
+
+
+ELF file SHA256: 93f712d52a032123
+
+Guru Meditation Error: Core  1 panic'ed (Interrupt wdt timeout on CPU1). 
+
+Core  1 register dump:
+PC      : 0x40382107  PS      : 0x00020234  A0      : 0x8200fd96  A1      : 0x3fc93550  
+A2      : 0x00020223  A3      : 0xa5a5a5a5  A4      : 0x8200fd96  A5      : 0x00060225  
+A6      : 0xfffbfff0  A7      : 0x00000046  A8      : 0x3fc93c30  A9      : 0x00000001  
+A10     : 0x60000000  A11     : 0x00000001  A12     : 0x0000000a  A13     : 0x3fc9353c  
+A14     : 0x00000001  A15     : 0x3fcf47a0  SAR     : 0x0000000a  EXCCAUSE: 0x00000006  
+EXCVADDR: 0x00000000  LBEG    : 0x400570e8  LEND    : 0x400570f3  LCOUNT  : 0x00000000  
+Core  1 was running in ISR context:
+EPC1    : 0x42022ae7  EPC2    : 0x00000000  EPC3    : 0x00000000  EPC4    : 0x40382107
+
+
+Backtrace: 0x40382104:0x3fc93550 0x4200fd93:0x3fc93560 0x42010395:0x3fc93580 0x4200a866:0x3fc935a0 0x4200ab72:0x3fc93610 0x4037739d:0x3fc93660 0x40376d2c:0x3fc93680 0x00040022:0x3fc93740 |<-CORRUPTED
+
+
+Core  0 register dump:
+PC      : 0x4037d5d3  PS      : 0x00060034  A0      : 0x8037c04f  A1      : 0x3fc930a0  
+A2      : 0x3fc939a0  A3      : 0xb33fffff  A4      : 0x0000abab  A5      : 0x00060023  
+A6      : 0x00060021  A7      : 0x0000cdcd  A8      : 0x0000abab  A9      : 0xffffffff  
+A10     : 0x00000000  A11     : 0x3fc95d0c  A12     : 0x00000000  A13     : 0x00000020  
+A14     : 0x02c939a0  A15     : 0x00ffffff  SAR     : 0x0000000e  EXCCAUSE: 0x00000006  
+EXCVADDR: 0x00000000  LBEG    : 0x00000000  LEND    : 0x00000000  LCOUNT  : 0x00000000  
+
+
+Backtrace: 0x4037d5d0:0x3fc930a0 0x4037c04c:0x3fc930e0 0x4037ae27:0x3fc93100 0x403786a4:0x3fc93120 0x403784c9:0x3fc93140 0x42022c07:0x3fcf4760 0x4200a38e:0x3fcf4780 0x4037bbc4:0x3fcf47a0
+
+
+
+
+ELF file SHA256: 93f712d52a032123
+
+Re-entered core dump! Exception happened during core dump!
+Rebooting...
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4200aa83
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce3808,len:0x4bc
+load:0x403c9700,len:0xbd8
+load:0x403cc700,len:0x2a0c
+entry 0x403c98d0
+---- Closed the serial port COM5 ----
