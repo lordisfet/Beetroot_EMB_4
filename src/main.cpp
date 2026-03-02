@@ -1,54 +1,34 @@
 #include <Arduino.h>
 
-void flashLed(int led, unsigned long start, unsigned int duration, unsigned int currentCycle);
+#define MONITOR_BAUD_RATE 115200
+#define ADC_RESOLUTION 12
+#define ADC_MAX_VALUE ((1 << ADC_RESOLUTION) - 1)
+#define ADC_REF_VOLTAGE 3.3
+#define ADC_PIN 4
 
-int redLed = 4;
-int blueLed = 17;
-int greenLed = 10;
+double calculateVoltage(int adcValue);
 
-int button = 21;
-bool buttonFlag = false;
-unsigned long debounceTime = 200;
-unsigned long lastClickTTime = 0;
-
-unsigned int duration = 1000;
-unsigned int totalCycles = 3000; // Duration for which the LED will be on (in milliseconds)
+int measureInterval = 100;
 
 void setup() {
-  pinMode(redLed, OUTPUT);
-  pinMode(blueLed, OUTPUT);
-  pinMode(greenLed, OUTPUT);
-  pinMode(button, INPUT_PULLDOWN);
+  Serial.begin(MONITOR_BAUD_RATE);
+  analogReadResolution(ADC_RESOLUTION);
+  pinMode(ADC_PIN, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
-  if (digitalRead(button) == HIGH && millis() - lastClickTTime > debounceTime)
-  {
-    lastClickTTime = millis(); // Update the last click time
-    buttonFlag = !buttonFlag; // Toggle the button flag
-  }
-  
-   if (buttonFlag)
-  {
-    unsigned int currentCycle = millis() % totalCycles; // Get the current cycle time
+  int adcValue = analogRead(ADC_PIN);
 
-    flashLed(redLed, 0, duration, currentCycle);
-    flashLed(blueLed, 1000, duration, currentCycle);
-    flashLed(greenLed, 2000, duration, currentCycle);
-  }
-   else
-  {
-    digitalWrite(redLed, LOW);
-    digitalWrite(blueLed, LOW);
-    digitalWrite(greenLed, LOW);
-  }
+  Serial.print("ADC RAW value: " + String(adcValue));
+  Serial.print("\t|\tCalculeted voltage: " + String(calculateVoltage(adcValue), 3) + " V");
+  Serial.println("\t|\t Measured voltage: " + String(analogReadMilliVolts(ADC_PIN)) + " V");
+
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(measureInterval);
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
-void flashLed(int led, unsigned long start, unsigned int duration, unsigned int currentCycle) {
-  unsigned long now = millis();
-  if (currentCycle >= start && currentCycle < start + duration) {
-    digitalWrite(led, HIGH);
-  } else {
-    digitalWrite(led, LOW);
-  }
+double calculateVoltage(int adcValue) {
+  return (adcValue / (double)ADC_MAX_VALUE) * ADC_REF_VOLTAGE;
 }
