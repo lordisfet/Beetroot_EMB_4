@@ -14,7 +14,6 @@ void setup() {
   Serial.begin(MONITOR_BAUD_RATE);
   analogReadResolution(ADC_RESOLUTION);
   pinMode(ADC_PIN, INPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
@@ -23,10 +22,7 @@ void loop() {
   Serial.print("ADC RAW value: " + String(adcValue));
   Serial.print("\t|\tCalculeted voltage: " + String(calculateVoltage(adcValue), 3) + " V");
   Serial.println("\t|\t Measured voltage: " + String(analogReadMilliVolts(ADC_PIN)) + " V");
-
-  digitalWrite(LED_BUILTIN, HIGH);
   delay(measureInterval);
-  digitalWrite(LED_BUILTIN, LOW);
 }
 
 double calculateVoltage(int adcValue) {
