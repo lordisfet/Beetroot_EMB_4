@@ -1,6 +1,7 @@
 #include <Arduino.h>
+#include <esp32DHT.h>
 
-#define BUTTON T20
+#define BUTTON 20
 
 volatile int16_t counter = 0;
 
