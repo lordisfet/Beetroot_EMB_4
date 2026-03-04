@@ -8,6 +8,7 @@
 
 double calculateVoltage(int adcValue, int adcResolution);
 double maxValueADC(int adcResolution);
+void printSeparator(char separator, int length, int concentration);
 void printData(int adcResolution = ADC_MAX_RESOLUTION, adc_attenuation_t attenuation = ADC_11db);
 
 int measureInterval = 100;
@@ -18,20 +19,19 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("\n-----------------------------------------------------------------------------------------------------------------------------");
+  printSeparator('-', 200, 1);
   Serial.println("ADC measurement with different RESOLUTION:");
   for (int i = ADC_MIN_RESOLUTION; i <= ADC_MAX_RESOLUTION; i++)
   {
     printData(i);
   }
-  Serial.println("-   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -");
+  printSeparator('-', 200, 4);
   Serial.println("ADC measurement with different ATTENUATION:");
   for (int i = 0; i <= ADC_ATTENDB_MAX; i++)
   {
     printData(ADC_MAX_RESOLUTION, (adc_attenuation_t)i);
   }
-  
-  Serial.println("-----------------------------------------------------------------------------------------------------------------------------\n");  
+  printSeparator('-', 200, 1);
   delay(measureInterval);
 }
 
@@ -43,6 +43,21 @@ double maxValueADC(int adcResolution) {
   return (1 << adcResolution) - 1;
 }
 
+void printSeparator(char separator, int length, int concentration) {
+  for (int i = 0; i < length; i++)
+  {
+    if (i % concentration == 0)
+    {
+      Serial.print(separator);
+    }
+    else
+    {
+      Serial.print(" ");
+    }
+  }
+  Serial.println();
+}
+
 void printData(int adcResolution, adc_attenuation_t attenuation) {
   analogReadResolution(adcResolution);
   analogSetAttenuation(attenuation);
@@ -52,6 +67,7 @@ void printData(int adcResolution, adc_attenuation_t attenuation) {
   double measuredVoltage = analogReadMilliVolts(ADC_PIN) / 1000.0;
 
   Serial.print("ADC Resolution: " + String(adcResolution) + " bits, " + (String)maxValueADC(adcResolution) + " max value");
+  Serial.print("\t|\tAttenuation: " + String(attenuation) + " db");
   Serial.print("\t|\tADC RAW value: " + String(adcValue));
   Serial.print("\t|\tCalculeted voltage: " + String(calculatedVoltage, 3) + " V");
   Serial.print("\t|\tMeasured voltage: " + String(measuredVoltage, 3) + " V");
