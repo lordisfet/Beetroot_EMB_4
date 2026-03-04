@@ -2,7 +2,7 @@
 
 #define MONITOR_BAUD_RATE 115200
 #define ADC_MAX_RESOLUTION 12
-#define ADC_MIN_RESOLUTION 8
+#define ADC_MIN_RESOLUTION 2
 #define ADC_REF_VOLTAGE 3.3
 #define ADC_PIN 4
 
@@ -19,19 +19,19 @@ void setup() {
 }
 
 void loop() {
-  printSeparator('-', 200, 1);
+  printSeparator('-', 220, 1);
   Serial.println("ADC measurement with different RESOLUTION:");
   for (int i = ADC_MIN_RESOLUTION; i <= ADC_MAX_RESOLUTION; i++)
   {
     printData(i);
   }
-  printSeparator('-', 200, 4);
+  printSeparator('-', 220, 4);
   Serial.println("ADC measurement with different ATTENUATION:");
   for (int i = 0; i <= ADC_ATTENDB_MAX; i++)
   {
     printData(ADC_MAX_RESOLUTION, (adc_attenuation_t)i);
   }
-  printSeparator('-', 200, 1);
+  printSeparator('-', 220, 1);
   delay(measureInterval);
 }
 
@@ -66,8 +66,8 @@ void printData(int adcResolution, adc_attenuation_t attenuation) {
   double calculatedVoltage = calculateVoltage(adcValue, adcResolution);
   double measuredVoltage = analogReadMilliVolts(ADC_PIN) / 1000.0;
 
-  Serial.print("ADC Resolution: " + String(adcResolution) + " bits, " + (String)maxValueADC(adcResolution) + " max value");
-  Serial.print("\t|\tAttenuation: " + String(attenuation) + " db");
+  Serial.print("ADC Resolution: " + String(adcResolution) + " bits, " + (String)maxValueADC(adcResolution) + " max");
+  Serial.print("\t|\tAttenuation: " + String(attenuation) + " mode");
   Serial.print("\t|\tADC RAW value: " + String(adcValue));
   Serial.print("\t|\tCalculeted voltage: " + String(calculatedVoltage, 3) + " V");
   Serial.print("\t|\tMeasured voltage: " + String(measuredVoltage, 3) + " V");
