@@ -25,18 +25,15 @@ unsigned long currentCycle = 0;
 
 OneButton oneButtonBoot(bootButton, true);
 OneButton oneButtonExternal(externalButton, true);
+bool isBootButtonClicked = false;
+bool isExternalButtonClicked = false;
 
 void handleBootClick() {
-  flashingModSelector(false);
-  Serial.printf("Boot button clicked, changing flashing mode down to: %d, led duration: %d\n", 
-    currentFlashingModIndex, flashLedsMods[currentFlashingModIndex].getDuration());
-  Serial.println(currentFlashingModIndex);
+  isBootButtonClicked = true;
 }
 
 void handleExternalClick() {
-  flashingModSelector(true);
-  Serial.printf("External button clicked, changing flashing mode up to: %d, led duration: %d\n", 
-    currentFlashingModIndex, flashLedsMods[currentFlashingModIndex].getDuration());
+  isExternalButtonClicked = true;
 }
 
 void setup() {
@@ -58,6 +55,21 @@ void setup() {
 }
 
 void loop() {
+  if (isBootButtonClicked)
+  {
+    flashingModSelector(false);
+    Serial.printf("Boot button clicked, changing flashing mode down to: %d, led duration: %d\n", 
+    currentFlashingModIndex, flashLedsMods[currentFlashingModIndex].getDuration());
+    isBootButtonClicked = false;
+  }
+  if (isExternalButtonClicked)
+  {
+    flashingModSelector(true);
+    Serial.printf("External button clicked, changing flashing mode up to: %d, led duration: %d\n", 
+    currentFlashingModIndex, flashLedsMods[currentFlashingModIndex].getDuration());
+    isExternalButtonClicked = false;
+  }
+  
   currentCycle = millis() % flashLedsMods[currentFlashingModIndex].getTotalCycles();
   flashLedsMods[currentFlashingModIndex].flashing(currentCycle);
   oneButtonBoot.tick();
