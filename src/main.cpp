@@ -5,10 +5,15 @@
 
 #define SERIAL_BAUD_RATE 115200
 
-void generateTestPatterns(const int8_t* newLeds, const int8_t ledCount, FlashLedsMod* flashLedsMods, const int8_t modscount, unsigned int maxDuration);
+void generateTestPatterns(const int8_t* newLeds, const int8_t ledCount, FlashLedsMod* flashLedsMods, 
+  const int8_t modscount, unsigned int maxDuration);
 void flashingModSelector(bool isNext);
 
-const int8_t leds[] = {4, 17, 10};
+const int8_t redLed = 4;
+const int8_t greenLed = 17;
+const int8_t blueLed = 10;
+const int8_t leds[] = {redLed, greenLed, blueLed};
+
 const int8_t ledCount = sizeof(leds) / sizeof(leds[0]);   
 const int8_t flashingModsCount = 6;
 FlashLedsMod flashLedsMods[flashingModsCount]; // 0 using for turn off all leds, 1-5 for different flashing modes
@@ -59,7 +64,8 @@ void loop() {
   oneButtonExternal.tick();
 }
 
-void generateTestPatterns(const int8_t* newLeds, const int8_t ledCount, FlashLedsMod* flashLedsMods, const int8_t modscount, unsigned int maxDuration) {
+void generateTestPatterns(const int8_t* newLeds, const int8_t ledCount, FlashLedsMod* flashLedsMods,
+  const int8_t modscount, unsigned int maxDuration) {
   for (int i = 0; i < modscount; i++)
   {
     flashLedsMods[i].setLeds(newLeds, ledCount);
@@ -68,7 +74,18 @@ void generateTestPatterns(const int8_t* newLeds, const int8_t ledCount, FlashLed
 }
 
 void flashingModSelector(bool isNext) {
-    isNext ? currentFlashingModIndex++ : currentFlashingModIndex--;
-    currentFlashingModIndex < 0 ? currentFlashingModIndex = flashingModsCount - 1 : currentFlashingModIndex;
-    currentFlashingModIndex %= flashingModsCount;
+  if (isNext)
+  {
+    currentFlashingModIndex++;
+  }
+  else 
+  {
+    currentFlashingModIndex--;
+    if (currentFlashingModIndex < 0)
+    {
+      currentFlashingModIndex = flashingModsCount - 1;
+    }
+  }
+
+  currentFlashingModIndex %= flashingModsCount;
 }
