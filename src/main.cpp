@@ -13,12 +13,14 @@ void printData(int adcResolution = ADC_MAX_RESOLUTION, adc_attenuation_t attenua
 
 int measureInterval = 100;
 
-void setup() {
+void setup()
+{
   Serial.begin(MONITOR_BAUD_RATE);
   pinMode(ADC_PIN, INPUT);
 }
 
-void loop() {
+void loop()
+{
   printSeparator('-', 220, 1);
   Serial.println("ADC measurement with different RESOLUTION:");
   for (int i = ADC_MIN_RESOLUTION; i <= ADC_MAX_RESOLUTION; i++)
@@ -35,15 +37,18 @@ void loop() {
   delay(measureInterval);
 }
 
-double calculateVoltage(int adcValue, int adcResolution) {
+double calculateVoltage(int adcValue, int adcResolution)
+{
   return (adcValue / (double)maxValueADC(adcResolution)) * ADC_REF_VOLTAGE;
 }
 
-double maxValueADC(int adcResolution) {
+double maxValueADC(int adcResolution)
+{
   return (1 << adcResolution) - 1;
 }
 
-void printSeparator(char separator, int length, int concentration) {
+void printSeparator(char separator, int length, int concentration)
+{
   for (int i = 0; i < length; i++)
   {
     if (i % concentration == 0)
@@ -58,7 +63,8 @@ void printSeparator(char separator, int length, int concentration) {
   Serial.println();
 }
 
-void printData(int adcResolution, adc_attenuation_t attenuation) {
+void printData(int adcResolution, adc_attenuation_t attenuation)
+{
   analogReadResolution(adcResolution);
   analogSetAttenuation(attenuation);
 
