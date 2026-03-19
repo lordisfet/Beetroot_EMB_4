@@ -28,7 +28,7 @@ void loop()
   static unsigned long startTime;
   static unsigned long finishTime;
 
-  startTime = millis();
+  startTime = micros();
 
   if (!bootButton.updateClick())
   {
@@ -37,7 +37,7 @@ void loop()
 
   blinker.blink();
 
-  finishTime = millis();
+  finishTime = micros();
 
   calculateAvgIterationTime(finishTime - startTime);
 }
@@ -51,7 +51,7 @@ void calculateAvgIterationTime(double iterationTime)
 
   if (iterationsCounter == SAMPLE)
   {
-    Serial.println("Avg time for iteratio is: " + (String)(timeOfSamplesIterations / SAMPLE));
+    Serial.println("Avg time for iteratio is: " + (String)(timeOfSamplesIterations / SAMPLE) + " mcs");
     iterationsCounter = 0;
     timeOfSamplesIterations = 0;
   }
