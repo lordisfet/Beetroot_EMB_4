@@ -12,10 +12,12 @@ private:
 public:
     Led(int8_t pin, State initialState = OFF) : pin(pin), state(initialState) {};
 
-    void updateLedStatus() { digitalWrite(pin, (state == ON) ? HIGH : LOW); }
+    int8_t getPin() { return pin };
+    State getState() { return state };
+    void setState(State state) { digitalWrite(pin, (state == ON) ? HIGH : LOW); }
     void init()
     {
         pinMode(pin, OUTPUT);
-        updateLedStatus();
+        setState(state);
     }
 };

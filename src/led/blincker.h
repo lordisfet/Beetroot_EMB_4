@@ -1,26 +1,21 @@
-// #pragma once
+#pragma once
 
-// #include <led/Led.h>
+#include "led/Led.h"
+#include "led/BlinkMode.h"
 
-// const class BLINK_MODE
-// {
-// };
+static constexpr unsigned int DEFAULT_BLINK_DURATION = 200;
 
-// class blincker
-// {
-// private:
-//     Led led;
-//     unsigned long blinkDuration;
+class Blinker
+{
+private:
+    Led led;
+    unsigned long blinkDurationMillis;
+    BlinkMode selectedMode;
 
-// public:
-//     blincker(/* args */);
-//     ~blincker();
-// };
+public:
+    Blinker(Led led, unsigned long blinkDurationMillis = DEFAULT_BLINK_DURATION, BlinkMode selectedMode = TURN_OFF)
+        : led(led), blinkDurationMillis(blinkDurationMillis), selectedMode(selectedMode) {};
 
-// blincker::blincker(/* args */)
-// {
-// }
-
-// blincker::~blincker()
-// {
-// }
+    void nextBlinkMode();
+    void blink();
+};
