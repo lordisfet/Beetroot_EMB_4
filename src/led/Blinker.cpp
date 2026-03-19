@@ -6,7 +6,7 @@
 void Blinker::nextBlinkMode()
 {
     selectedMode = static_cast<BlinkMode>((selectedMode + 1) % COUNT);
-    led.setState(OFF);
+    // led.setState(OFF);
 }
 
 void Blinker::blink()
@@ -16,21 +16,27 @@ void Blinker::blink()
     {
     case TURN_OFF:
         led.setState(OFF);
+        Serial.println("Blink mode: " + (String)selectedMode);
         break;
 
     case BLINKING:
-        if (currentTime % blinkDurationMillis == 0)
+        static unsigned long lastToggleTime = 0;
+        if (currentTime - lastToggleTime >= blinkDurationMillis)
         {
+            lastToggleTime = currentTime;
             led.setState(!led.getState());
         }
+
+        Serial.println("Blink mode: " + (String)selectedMode + (String)millis());
         break;
 
-    case SOS:
+        // case SOS:
 
-        // break;
+        //     break;
 
     case TURN_ON:
         led.setState(ON);
+        Serial.println("Blink mode: " + (String)selectedMode);
         break;
     }
 }

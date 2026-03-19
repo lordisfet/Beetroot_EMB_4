@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
-#include "ButtonState.h"
+#include "enums/ButtonState.h"
 
 static constexpr unsigned int DEFAULT_DEBOUNCE_DURATION = 100;
 

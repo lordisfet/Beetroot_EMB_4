@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Led.h"
-#include "BlinkMode.h"
+#include "enums/BlinkMode.h"
 
-static constexpr unsigned int DEFAULT_BLINK_DURATION = 500;
+static constexpr unsigned int DEFAULT_BLINK_DURATION = 100;
 
 class Blinker
 {

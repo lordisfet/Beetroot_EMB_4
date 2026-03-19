@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 enum ButtonState
 {
     RELEASED = 0,
