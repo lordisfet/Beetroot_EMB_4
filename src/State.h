@@ -1,7 +1,7 @@
 enum State
 {
-    ON,
-    OFF
+    ON = HIGH,
+    OFF = LOW
 };
 
 inline State operator!(State s)

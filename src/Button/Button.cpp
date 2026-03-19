@@ -1,20 +1,17 @@
 #include <button/Button.h>
 
-State Button::checkClick()
+State Button::updateClick()
 {
     static unsigned long lastClickTime;
     unsigned long currentTime = millis();
     bool currentState = digitalRead(pin);
 
-    if (state != currentState)
+    if (currentState != state && currentTime - lastClickTime > debounceTime)
     {
+        state = !state;
         lastClickTime = currentTime;
     }
-    if (lastClickTime + debounceTime > currentTime)
-    {
-        if (state != currentState)
-        {
-            state = !state;
-        }
-    }
+
+    // retunn !state because button uses inverted logic
+    return !state;
 }
