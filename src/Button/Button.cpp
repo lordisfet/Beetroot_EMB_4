@@ -1,18 +1,23 @@
 #include "Button.h"
-#include "ButtonState.h"
+#include "enums/ButtonState.h"
 
 ButtonState Button::updateClick()
 {
-    static unsigned long lastClickTime;
+    static unsigned long lastClickTime = 0;
+    static ButtonState previousState = RELEASED;
     unsigned long currentTime = millis();
-    bool currentState = digitalRead(pin);
+    ButtonState currentState = static_cast<ButtonState>(getState());
 
-    if (currentState != state && currentTime - lastClickTime > debounceTime)
+    if (currentState != previousState && currentTime - lastClickTime > debounceTime)
     {
-        state = !state;
+        previousState = currentState;
         lastClickTime = currentTime;
-        return state;
+
+        if (currentState == PRESSED)
+        {
+            return PRESSED;
+        }
     }
 
-    return !state;
+    return RELEASED;
 }

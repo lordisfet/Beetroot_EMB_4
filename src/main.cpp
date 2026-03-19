@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 #include "led/Led.h"
-#include "led/Blincker.h"
+#include "led/Blinker.h"
 #include "button/Button.h"
 
 constexpr int MONITOR_BAUD_RATE = 115200;
@@ -22,8 +22,12 @@ void setup()
 
 void loop()
 {
+
   if (bootButton.updateClick())
   {
     blinker.nextBlinkMode();
+    Serial.println(millis());
   }
+
+  blinker.blink();
 }

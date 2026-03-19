@@ -3,7 +3,7 @@
 #include "Led.h"
 #include "BlinkMode.h"
 
-static constexpr unsigned int DEFAULT_BLINK_DURATION = 200;
+static constexpr unsigned int DEFAULT_BLINK_DURATION = 500;
 
 class Blinker
 {

@@ -9,13 +9,13 @@ class Button
 {
 private:
     const int8_t pin;
-    ButtonState state;
     unsigned int debounceTime;
 
 public:
-    Button(int8_t pin, ButtonState = RELEASED, unsigned int debounceTime = DEFAULT_DEBOUNCE_DURATION)
-        : pin(pin), state(state), debounceTime(debounceTime) {}
+    Button(int8_t pin, unsigned int debounceTime = DEFAULT_DEBOUNCE_DURATION)
+        : pin(pin), debounceTime(debounceTime) {}
 
-    void init() { pinMode(pin, INPUT_PULLDOWN); }
+    ButtonState getState() { return static_cast<ButtonState>(digitalRead(pin)); }
+    void init() { pinMode(pin, INPUT_PULLUP); }
     ButtonState updateClick();
 };

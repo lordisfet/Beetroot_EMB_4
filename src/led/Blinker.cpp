@@ -1,7 +1,7 @@
 // #include <Morse.h>
 
 #include "Blinker.h"
-#include "LedState.h"
+#include "enums/LedState.h"
 
 void Blinker::nextBlinkMode()
 {
@@ -27,7 +27,7 @@ void Blinker::blink()
 
     case SOS:
 
-        break;
+        // break;
 
     case TURN_ON:
         led.setState(ON);
