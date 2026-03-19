@@ -11,13 +11,12 @@ void Blinker::nextBlinkMode()
 
 void Blinker::blink()
 {
-    static unsigned long currentTime = millis();
+    unsigned long currentTime = millis();
     switch (selectedMode)
     {
     case TURN_OFF:
     {
         led.setState(OFF);
-        Serial.println("Blink mode: " + (String)selectedMode + "   " + (String)millis());
         break;
     }
 
@@ -30,7 +29,6 @@ void Blinker::blink()
             led.setState(!led.getState());
         }
 
-        Serial.println("Blink mode: " + (String)selectedMode + "   " + (String)millis());
         break;
     }
 
@@ -41,7 +39,6 @@ void Blinker::blink()
     case TURN_ON:
     {
         led.setState(ON);
-        Serial.println("Blink mode: " + (String)(selectedMode) + "   " + (String)millis());
         break;
     }
     }

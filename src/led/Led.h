@@ -15,7 +15,11 @@ public:
 
     int8_t getPin() { return pin; }
     LedState getState() { return state; }
-    void setState(LedState state) { digitalWrite(pin, (state == ON) ? HIGH : LOW); }
+    void setState(LedState newState)
+    {
+        state = newState;
+        digitalWrite(pin, (state == ON) ? HIGH : LOW);
+    }
     void init()
     {
         pinMode(pin, OUTPUT);

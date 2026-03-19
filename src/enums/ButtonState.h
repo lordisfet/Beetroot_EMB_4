@@ -2,8 +2,8 @@
 
 enum ButtonState
 {
-    RELEASED,
-    PRESSED
+    PRESSED = 0,
+    RELEASED = 1
 };
 
 inline ButtonState operator!(ButtonState bs)
