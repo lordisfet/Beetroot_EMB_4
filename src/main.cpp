@@ -6,7 +6,7 @@
 
 constexpr int MONITOR_BAUD_RATE = 115200;
 constexpr int LED_PIN = LED_BUILTIN;
-constexpr int BOOT_PIN = 0;
+constexpr int BOOT_PIN = 4;
 
 Led led(LED_PIN);
 Button bootButton(BOOT_PIN);
@@ -22,7 +22,6 @@ void setup()
 
 void loop()
 {
-
   if (bootButton.updateClick())
   {
     blinker.nextBlinkMode();

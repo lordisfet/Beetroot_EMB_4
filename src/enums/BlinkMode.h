@@ -2,9 +2,9 @@
 
 enum BlinkMode
 {
-    TURN_OFF = 0,
-    BLINKING = 1,
-    TURN_ON = 2,
+    TURN_OFF,
+    BLINKING,
+    TURN_ON,
     // SOS,
-    COUNT = 3
+    COUNT
 };
