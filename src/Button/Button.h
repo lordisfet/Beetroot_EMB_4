@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include "enums/ButtonState.h"
 
-static constexpr unsigned int DEFAULT_DEBOUNCE_DURATION = 100;
+static constexpr unsigned int DEFAULT_DEBOUNCE_DURATION = 50;
 
 class Button
 {

@@ -4,16 +4,17 @@
 #include "led/Blinker.h"
 #include "button/Button.h"
 
-void calculateAvgIterationTime(double iterationTime);
+void IRAM_ATTR handleButtonInterrupt();
 
 constexpr int MONITOR_BAUD_RATE = 115200;
 constexpr int LED_PIN = LED_BUILTIN;
 constexpr int BOOT_PIN = 4;
-constexpr int SAMPLE = 1000;
 
 Led led(LED_PIN);
 Button bootButton(BOOT_PIN);
 Blinker blinker(led);
+
+volatile bool buttonFlag = false;
 
 void setup()
 {
@@ -21,38 +22,22 @@ void setup()
 
   led.init();
   bootButton.init();
+
+  attachInterrupt(digitalPinToInterrupt(BOOT_PIN), handleButtonInterrupt, FALLING);
 }
 
 void loop()
 {
-  static unsigned long startTime;
-  static unsigned long finishTime;
-
-  startTime = micros();
-
-  if (!bootButton.updateClick())
+  if (buttonFlag)
   {
     blinker.nextBlinkMode();
+    buttonFlag = false;
   }
 
   blinker.blink();
-
-  finishTime = micros();
-
-  calculateAvgIterationTime(finishTime - startTime);
 }
 
-void calculateAvgIterationTime(double iterationTime)
+void IRAM_ATTR handleButtonInterrupt()
 {
-  static int iterationsCounter = 0;
-  static unsigned long timeOfSamplesIterations = 0;
-  timeOfSamplesIterations += iterationTime;
-  iterationsCounter++;
-
-  if (iterationsCounter == SAMPLE)
-  {
-    Serial.println("Avg time for iteratio is: " + (String)(timeOfSamplesIterations / SAMPLE) + " mcs");
-    iterationsCounter = 0;
-    timeOfSamplesIterations = 0;
-  }
+  buttonFlag = !bootButton.updateClick();
 }
