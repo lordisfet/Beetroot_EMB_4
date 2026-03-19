@@ -1,7 +1,7 @@
 #pragma once
 
-#include "led/Led.h"
-#include "led/BlinkMode.h"
+#include "Led.h"
+#include "BlinkMode.h"
 
 static constexpr unsigned int DEFAULT_BLINK_DURATION = 200;
 

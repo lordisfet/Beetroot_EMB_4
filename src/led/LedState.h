@@ -1,12 +1,14 @@
 #pragma once
 
-enum State
+#include <Arduino.h>
+
+enum LedState
 {
     ON = HIGH,
     OFF = LOW
 };
 
-inline State operator!(State s)
+inline LedState operator!(LedState s)
 {
     return (s == ON) ? OFF : ON;
 }

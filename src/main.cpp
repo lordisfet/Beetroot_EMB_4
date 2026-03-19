@@ -24,6 +24,6 @@ void loop()
 {
   if (bootButton.updateClick())
   {
-    blinker.nextBlinkMode()
+    blinker.nextBlinkMode();
   }
 }

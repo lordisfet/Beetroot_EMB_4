@@ -1,8 +1,7 @@
-#include <MorseArduino.h>
+// #include <Morse.h>
 
-#include "Blincker.h"
-#include "BlinkMode.h"
-#include "State.h"
+#include "Blinker.h"
+#include "LedState.h"
 
 void Blinker::nextBlinkMode()
 {

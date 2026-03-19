@@ -1,9 +1,7 @@
-#include <button/Button.h>
+#include "Button.h"
+#include "ButtonState.h"
 
-// For active button`s state I use HIGH level for synhronization with led state
-// and using one class State for define component status
-// I guees to use !state for returning when button presed, but this look strange
-State Button::updateClick()
+ButtonState Button::updateClick()
 {
     static unsigned long lastClickTime;
     unsigned long currentTime = millis();

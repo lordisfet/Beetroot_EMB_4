@@ -1,20 +1,20 @@
 #pragma once
 
 #include <Arduino.h>
-#include <State.h>
+#include <LedState.h>
 
 class Led
 {
 private:
     const int8_t pin;
-    State state;
+    LedState state;
 
 public:
-    Led(int8_t pin, State initialState = OFF) : pin(pin), state(initialState) {};
+    Led(int8_t pin, LedState initialState = OFF) : pin(pin), state(initialState) {};
 
-    int8_t getPin() { return pin };
-    State getState() { return state };
-    void setState(State state) { digitalWrite(pin, (state == ON) ? HIGH : LOW); }
+    int8_t getPin() { return pin; }
+    LedState getState() { return state; }
+    void setState(LedState state) { digitalWrite(pin, (state == ON) ? HIGH : LOW); }
     void init()
     {
         pinMode(pin, OUTPUT);
