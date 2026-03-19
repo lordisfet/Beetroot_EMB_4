@@ -10,7 +10,7 @@ State Button::checkClick()
     {
         lastClickTime = currentTime;
     }
-    Add if (lastClickTime + debounceTime > currentTime)
+    if (lastClickTime + debounceTime > currentTime)
     {
         if (state != currentState)
         {
