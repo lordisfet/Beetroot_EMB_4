@@ -7,6 +7,7 @@
 constexpr int MONITOR_BAUD_RATE = 115200;
 constexpr int LED_PIN = LED_BUILTIN;
 constexpr int BUTTON_PIN = 4;
+constexpr int PRINT_DELAY = 1000;
 
 Led led(LED_PIN);
 Button button(BUTTON_PIN);
@@ -22,15 +23,18 @@ void setup()
 
 void loop()
 {
+  static unsigned long lastPrintTime = 0;
+  unsigned long currentTime = millis();
   if (button.getState())
   {
     blinker.nextBlinkMode();
     button.setState(UNCHANGED);
   }
 
-  if (millis() % 1000 == 0)
+  if (currentTime - lastPrintTime >= PRINT_DELAY)
   {
     Serial.println(blinker.getSelectedMode());
+    lastPrintTime = currentTime;
   }
 
   blinker.blink();

@@ -7,8 +7,9 @@ void IRAM_ATTR Button::isrHandler()
     if (currentTime - lastClickTime > debounceTime)
     {
         state = CHANGED;
-        lastClickTime = currentTime;
     }
+
+    lastClickTime = currentTime;
 }
 
 void IRAM_ATTR Button::isrWrapped(void *arg)
