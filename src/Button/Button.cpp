@@ -1,22 +1,27 @@
 #include "Button.h"
 
-ButtonState Button::updateClick()
+void IRAM_ATTR Button::isrHandler()
 {
-    static unsigned long lastClickTime = 0;
-    static ButtonState previousState = RELEASED;
     unsigned long currentTime = millis();
-    ButtonState currentState = static_cast<ButtonState>(getState());
 
-    if (currentState != previousState && currentTime - lastClickTime > debounceTime)
+    if (currentTime - lastClickTime > debounceTime)
     {
-        previousState = currentState;
+        state = CHANGED;
         lastClickTime = currentTime;
-
-        if (currentState == PRESSED)
-        {
-            return PRESSED;
-        }
     }
+}
 
-    return RELEASED;
+void IRAM_ATTR Button::isrWrapped(void *arg)
+{
+    if (arg != NULL)
+    {
+        Button *button = static_cast<Button *>(arg);
+        button->isrHandler();
+    }
+}
+
+void Button::init()
+{
+    pinMode(pin, INPUT_PULLUP);
+    attachInterruptArg(pin, isrWrapped, this, FALLING);
 }

@@ -2,11 +2,11 @@
 
 enum ButtonState
 {
-    PRESSED = 0,
-    RELEASED = 1
+    UNCHANGED = 0,
+    CHANGED = 1
 };
 
 inline ButtonState operator!(ButtonState bs)
 {
-    return (bs == RELEASED) ? PRESSED : RELEASED;
+    return (bs == UNCHANGED) ? CHANGED : UNCHANGED;
 }

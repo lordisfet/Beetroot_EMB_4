@@ -10,12 +10,18 @@ class Button
 private:
     const int8_t pin;
     unsigned int debounceTime;
+    volatile ButtonState state;
+    unsigned long lastClickTime = 0;
 
 public:
-    Button(int8_t pin, unsigned int debounceTime = DEFAULT_DEBOUNCE_DURATION)
-        : pin(pin), debounceTime(debounceTime) {}
+    Button(int8_t pin, unsigned int debounceTime = DEFAULT_DEBOUNCE_DURATION, ButtonState state = UNCHANGED)
+        : pin(pin), debounceTime(debounceTime), state(state) {}
 
-    ButtonState getState() { return static_cast<ButtonState>(digitalRead(pin)); }
-    void init() { pinMode(pin, INPUT_PULLUP); }
+    ButtonState getState() { return state; }
+    void setState(ButtonState s) { state = s; }
+
+    void init();
+    void IRAM_ATTR isrHandler();
+    void static IRAM_ATTR isrWrapped(void *arg);
     ButtonState updateClick();
 };

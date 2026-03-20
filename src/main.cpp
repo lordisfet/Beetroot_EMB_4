@@ -4,40 +4,34 @@
 #include "led/Blinker.h"
 #include "button/Button.h"
 
-void IRAM_ATTR handleButtonInterrupt();
-
 constexpr int MONITOR_BAUD_RATE = 115200;
 constexpr int LED_PIN = LED_BUILTIN;
-constexpr int BOOT_PIN = 4;
+constexpr int BUTTON_PIN = 4;
 
 Led led(LED_PIN);
-Button bootButton(BOOT_PIN);
+Button button(BUTTON_PIN);
 Blinker blinker(led);
-
-volatile bool buttonFlag = false;
 
 void setup()
 {
   Serial.begin(MONITOR_BAUD_RATE);
 
   led.init();
-  bootButton.init();
-
-  attachInterrupt(digitalPinToInterrupt(BOOT_PIN), handleButtonInterrupt, FALLING);
+  button.init();
 }
 
 void loop()
 {
-  if (buttonFlag)
+  if (button.getState())
   {
     blinker.nextBlinkMode();
-    buttonFlag = false;
+    button.setState(UNCHANGED);
+  }
+
+  if (millis() % 1000 == 0)
+  {
+    Serial.println(blinker.getSelectedMode());
   }
 
   blinker.blink();
-}
-
-void IRAM_ATTR handleButtonInterrupt()
-{
-  buttonFlag = !bootButton.updateClick();
 }
