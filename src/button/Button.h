@@ -33,5 +33,4 @@ public:
     void init();
     void IRAM_ATTR isrHandler();
     void static IRAM_ATTR isrWrapped(void *arg);
-    ButtonState updateClick();
 };
