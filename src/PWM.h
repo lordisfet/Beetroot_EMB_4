@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-enum TactLengthType
+enum DecimalPrefix
 {
     MCS,
     MS
@@ -11,7 +11,7 @@ class PWM
 private:
     int8_t _pin;
     const unsigned int _tactLength;
-    TactLengthType _tactLengthType;
+    DecimalPrefix _tactLengthType;
     float _dutyCycle;
 
     unsigned long _currentTime;
@@ -22,11 +22,11 @@ public:
     static constexpr float MIN_DUTY_CYCLE = 0;
     static constexpr float MAX_DUTY_CYCLE = 1;
 
-    PWM(int8_t pin, unsigned int tactLength, TactLengthType tactLengthType, float dutyCycle)
+    PWM(int8_t pin, unsigned int tactLength, DecimalPrefix tactLengthType, float dutyCycle)
         : _pin(pin), _tactLength(tactLength), _tactLengthType(tactLengthType), _dutyCycle(dutyCycle) {}
 
+    void setPWMLevel(bool state) { digitalWrite(_pin, state); }
     void init() { pinMode(_pin, OUTPUT); }
-
     void tick()
     {
         _currentTime = currentTimeDefinition();
