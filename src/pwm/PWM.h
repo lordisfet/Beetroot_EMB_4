@@ -21,7 +21,7 @@ private:
     unsigned long currentTimeDefinition() { return (_tactLengthType == MS) ? millis() : micros(); }
 
 public:
-    static constexpr float MIN_DUTY_CYCLE = 0.3;
+    static constexpr float MIN_DUTY_CYCLE = 0;
     static constexpr float MAX_DUTY_CYCLE = 1;
 
     PWM(int8_t pin, unsigned int tactLength, DecimalPrefix tactLengthType, float dutyCycle)

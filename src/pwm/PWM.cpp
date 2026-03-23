@@ -15,5 +15,5 @@ void PWM::tick()
 
 void PWM::mapAnalogToDutyCycle(int analogValueRaw, const int MAX_VALUE)
 {
-    _dutyCycle = MIN_DUTY_CYCLE + (analogValueRaw / MAX_VALUE) * (MAX_DUTY_CYCLE - MIN_DUTY_CYCLE);
+    _dutyCycle = MIN_DUTY_CYCLE + (static_cast<float>(analogValueRaw) / static_cast<float>(MAX_VALUE)) * (MAX_DUTY_CYCLE - MIN_DUTY_CYCLE);
 }
