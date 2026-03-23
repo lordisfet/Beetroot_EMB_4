@@ -20,7 +20,7 @@ constexpr int TACT_LENGHT = 20000;
 constexpr float DUTY_CYCLE = 0.3;
 constexpr DecimalPrefix PREFIX = MCS;
 
-Button button(BUTTON_PIN, DEBOUNCE_TIME, UNCHANGED);
+Button button(BUTTON_PIN, DEBOUNCE_TIME);
 PWM pwm(PWM_PIN, TACT_LENGHT, PREFIX, DUTY_CYCLE);
 
 void setup()
