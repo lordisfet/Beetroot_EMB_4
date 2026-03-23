@@ -37,7 +37,7 @@ void loop()
   if (button.getState())
   {
     pwm.tick();
-    // pwm.mapAnalogToDutyCycle(analogReadRaw(HANDLE_PIN), ANALOG_MAX_VALUE);
+    pwm.mapAnalogToDutyCycle(analogReadRaw(HANDLE_PIN), ANALOG_MAX_VALUE);
   }
   else
   {
