@@ -1,0 +1,12 @@
+Measurement 1: 5 ms
+Measurement 2: 5 ms
+Measurement 3: 5 ms
+Measurement 4: 5 ms
+Measurement 5: 5 ms
+Measurement 6: 5 ms
+Measurement 7: 5 ms
+Measurement 8: 5 ms
+Measurement 9: 5 ms
+Measurement 10: 5 ms
+================================
+Average reaction time: 5.00 ms
