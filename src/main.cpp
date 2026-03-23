@@ -9,9 +9,12 @@ constexpr int8_t BUTTON_PIN = 4;
 constexpr int8_t DEBOUNCE_TIME = 50;
 
 constexpr int8_t PWM_PIN = 45;
-constexpr int8_t HANDLE_PIN = 4;
 
-constexpr int TACT_LENGHT = 20;
+constexpr int8_t HANDLE_PIN = 3;
+constexpr int8_t POTENTIOMETER_RESOLUTION = 12;
+constexpr int16_t
+
+    constexpr int TACT_LENGHT = 20;
 constexpr float DUTY_CYCLE = 1;
 constexpr DecimalPrefix PREFIX = MS;
 
@@ -24,6 +27,8 @@ void setup()
 
   button.init();
   pwm.init();
+
+  pinMode(HANDLE_PIN, INPUT_PULLDOWN);
 }
 
 void loop()
@@ -36,4 +41,11 @@ void loop()
   {
     pwm.setPWMLevel(LOW);
   }
+
+  // static unsigned long lastPrintTime = 0;
+  // if (millis() - lastPrintTime > 250)
+  // {
+  //   Serial.println((String)analogReadRaw(HANDLE_PIN) + '\t' + (String)button.getState());
+  //   lastPrintTime = millis();
+  // }
 }
