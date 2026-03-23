@@ -4,13 +4,13 @@
 
 enum ButtonState
 {
-    UNCHANGED = 0,
-    CHANGED = 1
+    UNACTIVE = 0,
+    ACTIVE = 1
 };
 
 inline ButtonState operator!(ButtonState bs)
 {
-    return (bs == UNCHANGED) ? CHANGED : UNCHANGED;
+    return (bs == UNACTIVE) ? ACTIVE : UNACTIVE;
 }
 
 static constexpr unsigned int DEFAULT_DEBOUNCE_DURATION = 50;
@@ -24,7 +24,7 @@ private:
     unsigned long lastClickTime = 0;
 
 public:
-    Button(int8_t pin, unsigned int debounceTime = DEFAULT_DEBOUNCE_DURATION, ButtonState state = UNCHANGED)
+    Button(int8_t pin, unsigned int debounceTime = DEFAULT_DEBOUNCE_DURATION, ButtonState state = UNACTIVE)
         : pin(pin), debounceTime(debounceTime), state(state) {}
 
     ButtonState getState() { return state; }
