@@ -49,13 +49,13 @@ void loop()
     blueLedBlinker.blink();
   }
   else
-
+  {
     redLed.setState(OFF);
-  greenLed.setState(OFF);
-  blueLed.setState(OFF);
-}
+    greenLed.setState(OFF);
+    blueLed.setState(OFF);
+  }
 
-printLog();
+  printLog();
 }
 
 void printLog()
