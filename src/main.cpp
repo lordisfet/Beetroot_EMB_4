@@ -4,6 +4,8 @@
 #include "led/Blinker.h"
 #include "button/Button.h"
 
+void printLog();
+
 constexpr int MONITOR_BAUD_RATE = 115200;
 constexpr int PRINT_DELAY = 100;
 
@@ -46,7 +48,18 @@ void loop()
     greenLedBlinker.blink();
     blueLedBlinker.blink();
   }
+  else
 
+    redLed.setState(OFF);
+  greenLed.setState(OFF);
+  blueLed.setState(OFF);
+}
+
+printLog();
+}
+
+void printLog()
+{
   static unsigned long lastPrintTime = 0;
   unsigned long currentTime = millis();
   if (currentTime - lastPrintTime >= PRINT_DELAY)
