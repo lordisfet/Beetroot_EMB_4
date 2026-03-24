@@ -1,7 +1,17 @@
 #pragma once
 
 #include <Arduino.h>
-#include "enums/ButtonState.h"
+
+enum ButtonState
+{
+    UNACTIVE = 0,
+    ACTIVE = 1
+};
+
+inline ButtonState operator!(ButtonState bs)
+{
+    return (bs == UNACTIVE) ? ACTIVE : UNACTIVE;
+}
 
 static constexpr unsigned int DEFAULT_DEBOUNCE_DURATION = 50;
 
@@ -14,7 +24,7 @@ private:
     unsigned long lastClickTime = 0;
 
 public:
-    Button(int8_t pin, unsigned int debounceTime = DEFAULT_DEBOUNCE_DURATION, ButtonState state = UNCHANGED)
+    Button(int8_t pin, unsigned int debounceTime = DEFAULT_DEBOUNCE_DURATION, ButtonState state = UNACTIVE)
         : pin(pin), debounceTime(debounceTime), state(state) {}
 
     ButtonState getState() { return state; }
@@ -23,5 +33,4 @@ public:
     void init();
     void IRAM_ATTR isrHandler();
     void static IRAM_ATTR isrWrapped(void *arg);
-    ButtonState updateClick();
 };

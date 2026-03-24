@@ -10,14 +10,11 @@ class Blinker
 private:
     Led &led;
     unsigned long blinkDurationMillis;
-    BlinkMode selectedMode;
+    unsigned long lastToggleTime;
 
 public:
-    Blinker(Led &led, unsigned long blinkDurationMillis = DEFAULT_BLINK_DURATION, BlinkMode selectedMode = TURN_OFF)
-        : led(led), blinkDurationMillis(blinkDurationMillis), selectedMode(selectedMode) {};
+    Blinker(Led &led, unsigned long blinkDurationMillis = DEFAULT_BLINK_DURATION, unsigned long lastToggleTime = 0)
+        : led(led), blinkDurationMillis(blinkDurationMillis), lastToggleTime(lastToggleTime) {}
 
-    BlinkMode getSelectedMode() { return selectedMode; }
-
-    void nextBlinkMode();
     void blink();
 };

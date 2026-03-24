@@ -6,7 +6,10 @@ void IRAM_ATTR Button::isrHandler()
 
     if (currentTime - lastClickTime > debounceTime)
     {
-        state = CHANGED;
+        if (digitalRead(pin) == LOW)
+        {
+            state = !state;
+        }
     }
 
     lastClickTime = currentTime;
@@ -24,5 +27,5 @@ void IRAM_ATTR Button::isrWrapped(void *arg)
 void Button::init()
 {
     pinMode(pin, INPUT_PULLUP);
-    attachInterruptArg(pin, isrWrapped, this, FALLING);
+    attachInterruptArg(pin, isrWrapped, this, CHANGE);
 }
