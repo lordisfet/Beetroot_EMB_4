@@ -27,5 +27,5 @@ void IRAM_ATTR Button::isrWrapped(void *arg)
 void Button::init()
 {
     pinMode(pin, INPUT_PULLUP);
-    attachInterruptArg(pin, isrWrapped, this, CHANGE);
+    attachInterruptArg(pin, isrWrapped, this, FALLING);
 }
