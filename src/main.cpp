@@ -38,6 +38,8 @@ void setup()
   redLed.init();
   greenLed.init();
   blueLed.init();
+
+  atachInterru
 }
 
 void loop()
