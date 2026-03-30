@@ -26,10 +26,14 @@ void setup()
 
 void loop()
 {
-
   printLog();
 }
 
-void printLog()
+void printLog(const IDebouncer &debouncer)
 {
+  Serial.print("Button state: ");
+  Serial.print(button.getState() == State::PRESSED ? "PRESSED" : "RELEASED");
+  Serial.print(" | Click count: ");
+  Serial.println(debouncer.getCount());
+  delay(PRINT_DELAY);
 }

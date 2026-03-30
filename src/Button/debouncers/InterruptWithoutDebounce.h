@@ -10,6 +10,7 @@ public:
     {
         if (rawState == State::PRESSED)
         {
+            clickCount++;
             return State::PRESSED;
         }
         return State::RELEASED;
