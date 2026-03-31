@@ -1,11 +1,13 @@
 #include <Arduino.h>
 
-#include "State.h"
-#include "IDebouncer.h"
+#include "button/State.h"
+#include "button/debouncers/IDebouncer.h"
 
 class InterruptWithoutDebounce : public IDebouncer
 {
 public:
+    InterruptWithoutDebounce() = default;
+
     State update(State rawState, unsigned long currentTime) override
     {
         if (rawState == State::PRESSED)
