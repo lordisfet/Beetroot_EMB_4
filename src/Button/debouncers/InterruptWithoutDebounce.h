@@ -6,15 +6,11 @@
 class InterruptWithoutDebounce : public IDebouncer
 {
 public:
-    InterruptWithoutDebounce() = default;
+    InterruptWithoutDebounce() {};
 
     State update(State rawState, unsigned long currentTime) override
     {
-        if (rawState == State::PRESSED)
-        {
-            clickCount++;
-            return State::PRESSED;
-        }
-        return State::RELEASED;
+        clickCount++;
+        return rawState == State::PRESSED ? State::PRESSED : State::RELEASED;
     }
 };
