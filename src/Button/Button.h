@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 #include "State.h"
-#include "debouncers/IDebouncer.h"
+#include "clickCheckers/IDebouncer.h"
 
 class Button
 {
@@ -12,7 +12,7 @@ private:
     State _state;
 
 public:
-    Button(uint8_t pin, State state = State::RELEASED) : _pin(pin), _state(state) { pinMode(_pin, INPUT_PULLUP); }
+    Button(uint8_t pin, State state = RELEASED) : _pin(pin), _state(state) { pinMode(_pin, INPUT_PULLUP); }
 
     State getState() { return _state; }
 

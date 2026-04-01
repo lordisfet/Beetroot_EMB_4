@@ -1,9 +1,10 @@
 #include <Arduino.h>
 
 #include "button/Button.h"
-#include "button/debouncers/InterruptWithoutDebounce.h"
+#include "button/clickCheckers/WithoutDebounce.h"
+#include "button/clickCheckers/TimeBasedDebounce.h"
 
-void printLog(const IDebouncer &debouncer);
+void printLog(IDebouncer &ckeckerWithoutDebounce);
 
 constexpr int MONITOR_BAUD_RATE = 115200;
 constexpr int PRINT_DELAY = 100;
@@ -11,11 +12,17 @@ constexpr int PRINT_DELAY = 100;
 constexpr int BUTTON_PIN = 4;
 
 Button button(BUTTON_PIN);
-InterruptWithoutDebounce debouncer;
+
+WithoutDebounce ckrWithoutDebounce;
+TimeBasedDebounce ckrTimeBasedDebounce;
 
 void IRAM_ATTR globalISR()
 {
-  button.clickCheck(debouncer, static_cast<State>(digitalRead(BUTTON_PIN)), millis());
+  State currentState = static_cast<State>(digitalRead(BUTTON_PIN));
+  unsigned long currentTime = millis();
+
+  button.clickCheck(ckrWithoutDebounce, currentState, currentTime);
+  button.clickCheck(ckrTimeBasedDebounce, currentState, currentTime);
 }
 
 void setup()
@@ -26,17 +33,19 @@ void setup()
 
 void loop()
 {
-  printLog(debouncer);
+  printLog(ckrWithoutDebounce);
+  printLog(ckrTimeBasedDebounce);
 }
 
-void printLog(const IDebouncer &debouncer)
+void printLog(IDebouncer &ckeckerWithoutDebounce)
 {
-  static int lastClickCount = 0;
-  int currentClickCount = debouncer.getCount();
+  int lastClickCount = ckeckerWithoutDebounce.getLastClickTime();
+  int currentClickCount = ckeckerWithoutDebounce.getCount();
   if (lastClickCount != currentClickCount)
   {
-    lastClickCount = currentClickCount;
+    ckeckerWithoutDebounce.setLastClickTime(currentClickCount);
+    Serial.print(ckeckerWithoutDebounce.getName() + '\t');
     Serial.print("Click count: ");
-    Serial.println(debouncer.getCount());
+    Serial.println(currentClickCount);
   }
 }

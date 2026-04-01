@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-enum class State
+enum State
 {
     PRESSED = LOW,
     RELEASED = HIGH
