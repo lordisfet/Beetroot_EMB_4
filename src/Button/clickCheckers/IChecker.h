@@ -4,6 +4,7 @@
 
 #include "button/State.h"
 
+// TODO: split IChecker to interrupting and polling
 class IChecker
 {
 private:
