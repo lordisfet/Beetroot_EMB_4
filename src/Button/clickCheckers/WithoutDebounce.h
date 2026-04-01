@@ -5,7 +5,6 @@
 
 class WithoutDebounce : public IChecker
 {
-private:
 public:
     WithoutDebounce() { setName("InterrptWithoutDebounce"); }
 

@@ -26,5 +26,5 @@ public:
     void incrementCount() { _clickCount++; }
 
     virtual void onInterrupt(State rawState, unsigned long currentTime) {}
-    virtual State update(State rawState, unsigned long currentTime) = 0;
+    // virtual State update(State rawState, unsigned long currentTime) = 0;
 };

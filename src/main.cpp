@@ -21,8 +21,8 @@ void IRAM_ATTR globalISR()
   State currentState = static_cast<State>(digitalRead(BUTTON_PIN));
   unsigned long currentTime = millis();
 
-  button.clickCheck(ckrWithoutDebounce, currentState, currentTime);
-  button.clickCheck(ckrTimeBasedDebounce, currentState, currentTime);
+  ckrWithoutDebounce.onInterrupt(currentState, currentTime);
+  ckrTimeBasedDebounce.onInterrupt(currentState, currentTime);
 }
 
 void setup()
