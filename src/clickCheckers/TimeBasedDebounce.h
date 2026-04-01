@@ -1,16 +1,18 @@
+#pragma once
+
 #include <Arduino.h>
 
-#include "button/State.h"
-#include "button/clickCheckers/IChecker.h"
+#include "State.h"
+#include "clickCheckers/abstract/InterruptChecker.h"
 
-class TimeBasedDebounce : public IChecker
+class TimeBasedDebounce : public InterruptChecker
 {
 private:
     unsigned int _lastClickTime = 0;
     unsigned int _debounceTime = 100;
 
 public:
-    TimeBasedDebounce() { setName("TimeBasedDebounce"); }
+    TimeBasedDebounce() { setName("InterruptTimeBasedDebounce"); }
 
     void onInterrupt(State rawState, unsigned long currentTime) override
     {

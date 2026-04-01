@@ -1,17 +1,15 @@
 #include <Arduino.h>
 
-#include "button/Button.h"
-#include "button/clickCheckers/WithoutDebounce.h"
-#include "button/clickCheckers/TimeBasedDebounce.h"
+#include "clickCheckers/abstract/Checker.h"
+#include "clickCheckers/WithoutDebounce.h"
+#include "clickCheckers/TimeBasedDebounce.h"
 
-void printLog(IChecker &ckeckerWithoutDebounce);
+void printLog(Checker &ckeckerWithoutDebounce);
 
 constexpr int MONITOR_BAUD_RATE = 115200;
 constexpr int PRINT_DELAY = 100;
 
 constexpr int BUTTON_PIN = 4;
-
-Button button(BUTTON_PIN);
 
 WithoutDebounce ckrWithoutDebounce;
 TimeBasedDebounce ckrTimeBasedDebounce;
@@ -37,14 +35,14 @@ void loop()
   printLog(ckrTimeBasedDebounce);
 }
 
-void printLog(IChecker &ckeckerWithoutDebounce)
+void printLog(Checker &checker)
 {
-  int lastClickCount = ckeckerWithoutDebounce.getLastClickTime();
-  int currentClickCount = ckeckerWithoutDebounce.getCount();
+  int lastClickCount = checker.getLastClickTime();
+  int currentClickCount = checker.getClickCount();
   if (lastClickCount != currentClickCount)
   {
-    ckeckerWithoutDebounce.setLastClickTime(currentClickCount);
-    Serial.print(ckeckerWithoutDebounce.getName() + '\t');
+    checker.setLastClickTime(currentClickCount);
+    Serial.print(checker.getName() + '\t');
     Serial.print("Click count: ");
     Serial.println(currentClickCount);
   }
