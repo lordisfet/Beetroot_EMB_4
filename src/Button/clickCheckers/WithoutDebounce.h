@@ -1,16 +1,17 @@
 #include <Arduino.h>
 
 #include "button/State.h"
-#include "button/clickCheckers/IDebouncer.h"
+#include "button/clickCheckers/IChecker.h"
 
-class WithoutDebounce : public IDebouncer
+class WithoutDebounce : public IChecker
 {
+private:
 public:
-    WithoutDebounce() { setName("InterrptWithoutDebounce"); };
+    WithoutDebounce() { setName("InterrptWithoutDebounce"); }
 
-    State update(State rawState, unsigned long currentTime) override
+    void onInterrupt(State rawState, unsigned long currentTime) override
     {
         incrementCount();
-        return rawState == PRESSED ? PRESSED : RELEASED;
+        setIsPressed(true);
     }
 };

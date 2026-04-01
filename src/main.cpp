@@ -4,7 +4,7 @@
 #include "button/clickCheckers/WithoutDebounce.h"
 #include "button/clickCheckers/TimeBasedDebounce.h"
 
-void printLog(IDebouncer &ckeckerWithoutDebounce);
+void printLog(IChecker &ckeckerWithoutDebounce);
 
 constexpr int MONITOR_BAUD_RATE = 115200;
 constexpr int PRINT_DELAY = 100;
@@ -37,7 +37,7 @@ void loop()
   printLog(ckrTimeBasedDebounce);
 }
 
-void printLog(IDebouncer &ckeckerWithoutDebounce)
+void printLog(IChecker &ckeckerWithoutDebounce)
 {
   int lastClickCount = ckeckerWithoutDebounce.getLastClickTime();
   int currentClickCount = ckeckerWithoutDebounce.getCount();

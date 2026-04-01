@@ -1,26 +1,24 @@
 #include <Arduino.h>
 
 #include "button/State.h"
-#include "button/clickCheckers/IDebouncer.h"
+#include "button/clickCheckers/IChecker.h"
 
-// Debounce with time based logic
-class TimeBasedDebounce : public IDebouncer
+class TimeBasedDebounce : public IChecker
 {
 private:
     unsigned int _lastClickTime = 0;
     unsigned int _debounceTime = 100;
 
 public:
-    TimeBasedDebounce() { setName("TimeBasedDebounce"); };
+    TimeBasedDebounce() { setName("TimeBasedDebounce"); }
 
-    State update(State rawState, unsigned long currentTime) override
+    void onInterrupt(State rawState, unsigned long currentTime) override
     {
         if (currentTime - _lastClickTime > _debounceTime)
         {
             incrementCount();
+            setIsPressed(true);
             _lastClickTime = currentTime;
-            return PRESSED;
         }
-        return RELEASED;
     }
 };
