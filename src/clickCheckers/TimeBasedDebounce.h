@@ -3,24 +3,22 @@
 #include <Arduino.h>
 
 #include "State.h"
-#include "clickCheckers/abstract/InterruptChecker.h"
+#include "clickCheckers/Checker.h"
+#include "clickCheckers/Interrupt.h"
+#include "clickCheckers/Polling.h"
 
-class TimeBasedDebounce : public InterruptChecker
+class TimeBasedDebounce : public Checker, public Interrupt
 {
-private:
-    unsigned int _lastClickTime = 0;
-    unsigned int _debounceTime = 100;
-
 public:
     TimeBasedDebounce() { setName("InterruptTimeBasedDebounce"); }
 
     void onInterrupt(State rawState, unsigned long currentTime) override
     {
-        if (currentTime - _lastClickTime > _debounceTime)
+        if (currentTime - getLastClickTime() > getDebounceTime())
         {
             incrementCount();
             setIsPressed(true);
-            _lastClickTime = currentTime;
+            setLastClickTime(currentTime);
         }
     }
 };

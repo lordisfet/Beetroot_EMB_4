@@ -3,9 +3,11 @@
 #include <Arduino.h>
 
 #include "State.h"
-#include "clickCheckers/abstract/InterruptChecker.h"
+#include "clickCheckers/Checker.h"
+#include "clickCheckers/Interrupt.h"
+#include "clickCheckers/Polling.h"
 
-class WithoutDebounce : public InterruptChecker
+class WithoutDebounce : public Checker, public Interrupt
 {
 public:
     WithoutDebounce() { setName("InterruptWithoutDebounce"); }

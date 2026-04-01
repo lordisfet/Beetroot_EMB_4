@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#include "clickCheckers/abstract/Checker.h"
+#include "clickCheckers/Checker.h"
 #include "clickCheckers/WithoutDebounce.h"
 #include "clickCheckers/TimeBasedDebounce.h"
 
