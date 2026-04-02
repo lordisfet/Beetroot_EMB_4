@@ -6,5 +6,5 @@ class Interrupt
 {
 
 public:
-    virtual void onInterrupt(State rawState, unsigned long currentTime) {}
+    virtual void onInterrupt(State rawState, unsigned long currentTime) = 0;
 };

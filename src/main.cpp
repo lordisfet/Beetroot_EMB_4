@@ -3,6 +3,7 @@
 #include "clickCheckers/Checker.h"
 #include "clickCheckers/WithoutDebounce.h"
 #include "clickCheckers/TimeBasedDebounce.h"
+#include "clickCheckers/StateBasedDebounce.h"
 
 void printLog(Checker &ckeckerWithoutDebounce);
 
@@ -13,6 +14,7 @@ constexpr int BUTTON_PIN = 4;
 
 WithoutDebounce ckrWithoutDebounce;
 TimeBasedDebounce ckrTimeBasedDebounce;
+StateBasedDebounce ckrStateBasedDebounce;
 
 void IRAM_ATTR globalISR()
 {
@@ -21,6 +23,7 @@ void IRAM_ATTR globalISR()
 
   ckrWithoutDebounce.onInterrupt(currentState, currentTime);
   ckrTimeBasedDebounce.onInterrupt(currentState, currentTime);
+  ckrStateBasedDebounce.onInterrupt(currentState, currentTime);
 }
 
 void setup()
@@ -31,17 +34,20 @@ void setup()
 
 void loop()
 {
+  ckrStateBasedDebounce.update(static_cast<State>(digitalRead(BUTTON_PIN)), millis());
+
   printLog(ckrWithoutDebounce);
   printLog(ckrTimeBasedDebounce);
+  printLog(ckrStateBasedDebounce);
 }
 
 void printLog(Checker &checker)
 {
-  int lastClickCount = checker.getLastClickTime();
+  int lastClickCount = checker.getLastClickCount();
   int currentClickCount = checker.getClickCount();
   if (lastClickCount != currentClickCount)
   {
-    checker.setLastClickTime(currentClickCount);
+    checker.setLastClickCount(currentClickCount);
     Serial.print(checker.getName() + '\t');
     Serial.print("Click count: ");
     Serial.println(currentClickCount);

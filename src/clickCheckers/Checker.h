@@ -10,8 +10,8 @@ private:
     String _name;
     volatile unsigned int _clickCount = 0;
     unsigned int _lastClickCount = 0;
-    unsigned int _lastClickTime = 0;
-    unsigned int _debounceTime = 100;
+    volatile unsigned int _lastClickTime = 0;
+    unsigned int _debounceTime = 50;
     volatile bool _isPressed = false;
 
 public:

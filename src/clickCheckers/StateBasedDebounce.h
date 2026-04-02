@@ -7,24 +7,34 @@
 #include "clickCheckers/Interrupt.h"
 #include "clickCheckers/Polling.h"
 
-class StateBasedDebounce : public Checker, public Polling, public Interrupt
+class StateBasedDebounce : public Checker,
+                           public Polling,
+                           public Interrupt
 {
 public:
     StateBasedDebounce() { setName("StateBasedDebounce"); }
 
     void onInterrupt(State rawState, unsigned long currentTime) override
     {
-        setIsPressed(rawState == PRESSED);
-        setLastClickTime(currentTime);
+        if (!getIsPressed())
+        {
+            setIsPressed(true);
+            setLastClickTime(currentTime);
+        }
     }
 
-    State update(State rawState, unsigned long currentTime) override
+    void update(State rawState, unsigned long currentTime) override
     {
-        if (getIsPressed() && rawState == PRESSED && currentTime - getLastClickTime() > getDebounceTime())
+        if (getIsPressed())
         {
-            incrementCount();
-            setIsPressed(false);
+            if (currentTime - getLastClickTime() > getDebounceTime())
+            {
+                if (rawState == PRESSED)
+                {
+                    incrementCount();
+                }
+                setIsPressed(false);
+            }
         }
-        return rawState;
     }
 };

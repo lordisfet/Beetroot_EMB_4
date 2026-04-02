@@ -17,6 +17,7 @@ public:
         if (currentTime - getLastClickTime() > getDebounceTime())
         {
             incrementCount();
+            // setIsPressed(false) треба викликати вже в loop() після обробки флагу
             setIsPressed(true);
             setLastClickTime(currentTime);
         }
