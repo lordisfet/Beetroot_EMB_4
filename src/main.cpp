@@ -4,6 +4,7 @@
 #include "clickCheckers/WithoutDebounce.h"
 #include "clickCheckers/TimeBasedDebounce.h"
 #include "clickCheckers/StateBasedDebounce.h"
+#include "clickCheckers/PollingDebounce.h"
 
 void printLog(Checker &ckeckerWithoutDebounce);
 
@@ -15,12 +16,18 @@ constexpr int BUTTON_PIN = 4;
 WithoutDebounce ckrWithoutDebounce;
 TimeBasedDebounce ckrTimeBasedDebounce;
 StateBasedDebounce ckrStateBasedDebounce;
+PollingDebounce ckrPollingDebounce;
+
+State currentState;
+unsigned long currentTime;
+volatile int mainTest = 0;
 
 void IRAM_ATTR globalISR()
 {
-  State currentState = static_cast<State>(digitalRead(BUTTON_PIN));
-  unsigned long currentTime = millis();
+  currentState = static_cast<State>(digitalRead(BUTTON_PIN));
+  currentTime = millis();
 
+  mainTest++;
   ckrWithoutDebounce.onInterrupt(currentState, currentTime);
   ckrTimeBasedDebounce.onInterrupt(currentState, currentTime);
   ckrStateBasedDebounce.onInterrupt(currentState, currentTime);
@@ -34,11 +41,16 @@ void setup()
 
 void loop()
 {
-  ckrStateBasedDebounce.update(static_cast<State>(digitalRead(BUTTON_PIN)), millis());
+  currentState = static_cast<State>(digitalRead(BUTTON_PIN));
+  currentTime = millis();
+
+  ckrStateBasedDebounce.update(currentState, currentTime);
+  ckrPollingDebounce.update(currentState, currentTime);
 
   printLog(ckrWithoutDebounce);
   printLog(ckrTimeBasedDebounce);
   printLog(ckrStateBasedDebounce);
+  printLog(ckrPollingDebounce);
 }
 
 void printLog(Checker &checker)
@@ -51,5 +63,7 @@ void printLog(Checker &checker)
     Serial.print(checker.getName() + '\t');
     Serial.print("Click count: ");
     Serial.println(currentClickCount);
+    Serial.println("Main test count: ");
+    Serial.println(mainTest);
   }
 }
