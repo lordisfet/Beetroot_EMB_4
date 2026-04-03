@@ -1,0 +1,9 @@
+InterruptWithoutDebounce        Click count: 176
+InterruptTimeBasedDebounce      Click count: 126
+StateBasedDebounce      Click count: 100
+PollingDebounce Click count: 100
+
+Викона 100 кліків, стретегія обробки кліків з використанням приривання 
+та обробки встановленого стану в основному циклі loop() дає точний результат як і використання 
+кінечної машини станів(Finite State Machine).
+По факту в полях кнопки немає сенсу зберігати саме її стан, краще використовувати атрибут isClicked або isExecutable
