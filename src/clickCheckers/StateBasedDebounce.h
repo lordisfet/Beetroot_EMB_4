@@ -32,6 +32,8 @@ public:
                 if (rawState == PRESSED)
                 {
                     incrementCount();
+                    // тут може бути інструкція для встановлення стану, що кнопка була натиснута,
+                    // або дозволу на виконання в loop()
                 }
                 setIsPressed(false);
             }
