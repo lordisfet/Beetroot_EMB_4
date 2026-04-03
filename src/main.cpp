@@ -9,7 +9,6 @@
 void printLog(Checker &ckeckerWithoutDebounce);
 
 constexpr int MONITOR_BAUD_RATE = 115200;
-constexpr int PRINT_DELAY = 100;
 
 constexpr int BUTTON_PIN = 4;
 
@@ -20,14 +19,12 @@ PollingDebounce ckrPollingDebounce;
 
 State currentState;
 unsigned long currentTime;
-volatile int mainTest = 0;
 
 void IRAM_ATTR globalISR()
 {
   currentState = static_cast<State>(digitalRead(BUTTON_PIN));
   currentTime = millis();
 
-  mainTest++;
   ckrWithoutDebounce.onInterrupt(currentState, currentTime);
   ckrTimeBasedDebounce.onInterrupt(currentState, currentTime);
   ckrStateBasedDebounce.onInterrupt(currentState, currentTime);
@@ -63,7 +60,5 @@ void printLog(Checker &checker)
     Serial.print(checker.getName() + '\t');
     Serial.print("Click count: ");
     Serial.println(currentClickCount);
-    Serial.println("Main test count: ");
-    Serial.println(mainTest);
   }
 }
